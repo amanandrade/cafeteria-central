@@ -12,7 +12,8 @@ jobs:
   deploy:
     permissions:
       pages: write 
-      id-token: write  
+      id-token: write 
+      contents: write
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +38,7 @@ jobs:
           npm run build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: ./public
@@ -50,8 +51,14 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
       #     publish_dir: ./public
       #     publish_branch: gh-pages
+      # - name: Deploy to GitHub Pages
+      #   if: success()
+      #   uses: actions/deploy-pages@v1
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
         if: success()
-        uses: actions/deploy-pages@v1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
+          folder: ./public
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -37,11 +37,11 @@ jobs:
           npm run build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v1
         with:
           name: github-pages
           path: ./public
-          if-no-files-found: error
+          # if-no-files-found: error
 
       # - name: Deploy to GitHub Pages
       #   if: success()
@@ -52,6 +52,6 @@ jobs:
       #     publish_branch: gh-pages
       - name: Deploy to GitHub Pages
         if: success()
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -11,7 +11,7 @@ body, html {
 body {
     display: flex;
     flex-direction: column;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .wrapper {
@@ -22,7 +22,7 @@ body {
 }
 
 header, footer {
-    background-color: #f8f8f8;
+    background-color: #a88989;
     padding: 20px 0;
 }
 

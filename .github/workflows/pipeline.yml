@@ -62,4 +62,5 @@ jobs:
         with:
           folder: ./public
           target-folder: ./docs
+          branch: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -9,7 +9,7 @@ on:
       - feature/*
 
 jobs:
-  deploy:
+  build:
     permissions:
       pages: write 
       id-token: write 
@@ -42,24 +42,34 @@ jobs:
         with:
           name: github-pages
           path: ./public
-          # if-no-files-found: error
+          if-no-files-found: error
 
-      # - name: Deploy to GitHub Pages
-      #   if: success()
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./public
-      #     publish_branch: gh-pages
-      # - name: Deploy to GitHub Pages
-      #   if: success()
-      #   uses: actions/deploy-pages@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    needs: build
+    permissions:
+      pages: write 
+      id-token: write 
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Preparing download
+        run: mkdir -p build-artifacts
+
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: build-artifacts
+
       - name: Deploy to GitHub Pages
         if: success()
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./public
+          folder: ./build-artifacts
           target-folder: ./docs
+          branch: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}
